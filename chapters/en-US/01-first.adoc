@@ -1,0 +1,126 @@
+== Chapter 1: First steps from redborder manager
+
+Once redborder IPS has been registered in redborder Manager, the sensor configuration must continue.
+Before redborder IPS will be able to analyze traffic based on a security policy, some tasks must be completed:
+
+* Enable inspection segments
+* Choose the sensor operating mode
+* Download IPS rules
+* Create security policies
+* Push security policies to sensor
+
+After completing these tasks correctly, redborder Manager will display the security events that the sensor will start to generate.
+
+[NOTE]
+===============================
+The generation of events by the sensor will depend on the nature of the traffic to be inspected and on the security policies applied.
+===============================
+
+=== Access to redborder Manager
+
+Accessing the redborder Manager is necessary to begin with sensor management. To do this, enter the Manager IP address in a browser window and then access with administrator credentials.
+
+[NOTE]
+===============================
+The default administrator credentials are:
+user `admin` and password `redborder`.
+===============================
+
+[.text-center]
+.redborder manager login window
+image::images/image37.png[image]
+
+=== Basic redborder IPS sensor configuration
+
+Once inside redborder Manager, it is possible that a dashboard created by default by the platform appears directly. From here it is possible to go to the Sensors section, where the new registered sensor (`mysensor`) will appear.
+
+[.text-center]
+.Monitor Dashboard on redborder manager: go to Sensors
+image::images/image1.png[image]
+
+To access the sensor edit options, click on the sensor name.
+
+[.text-center]
+.Sensor `mysensor` registered and visible from the Sensors section
+image::images/image2.png[image]
+
+These edit options are shown in the image below.
+
+[.text-center]
+.Sensor edit options
+image::images/image36.png[image]
+
+In the `IPS/IDS Settings` section you can set the sensor operating mode, which by default will be the operating mode inherited from the section `Tools` -> `General Settings`.
+
+[.text-center]
+.redborder IPS sensor operating modes
+image::images/image22.png[image]
+
+Available operating modes are:
+
+* IDS Forwarding
+** It does not block network traffic.
+** In inspection segments with two interfaces, the sensor forwards the incoming traffic to the second interface and analyzes the traffic of the first interface. This ensures connectivity.
+** In inspection segments with an interface, the sensor would act the same as in IDS span mode.
+* IDS span
+** It does not block network traffic.
+** It is used in inspection segments with an interface (Span Port or Port Mirroring). The sensor analyzes the traffic coming from this interface.
+** In inspection segments with two interfaces, the sensor does not forward traffic from one interface to another, as it does in the IDS Forwarding mode.
+* IPS test mode
+** It does not block network traffic.
+** It acts as a conventional IPS mode, but in test mode.
+* IPS
+** Block network traffic if necessary.
+** It analyzes the incoming traffic of the segment and forwards it to the segment output as long as it does not have to be blocked.
+
+A necessary action for the sensor to start working is to enable the inspection segment(s). To do this, in the sensor edit options, the Groups section must be unfold and then desired segment(s) must be enabled. The example below shows how the default group has a single segment and 4 available CPUs.
+
+[.text-center]
+.Segment group default: segment br0 disabled
+image::images/image53.png[image]
+
+In order for the sensor to inspect the network traffic passing through that segment, it is necessary to activate the inspection of that segment in this window, as shown in the following image.
+
+[.text-center]
+.Segment group default: segment br0 enabled
+image::images/image34.png[image]
+
+Once enabled, the changes will be activated after clicking the Update button.
+
+=== Download IPS rules
+
+Signing policies are created based on Snort rules, so the first necessary step is to configure the platform rules sources. This is done in `Tools` -> `Rule Versions`, as shown in the image below.
+
+[.text-center]
+.Tools -> Rule Versions
+image::images/image24.png[image]
+
+There is a list of three rule sources created and activated by default:
+
+* Emerging Threats community rules
+* Emerging Threats PRO rules
+* VRT (current Talos)
+
+The Code column shows if it is necessary to include any code to be able to download the rules from that rule source. The possible values are:
+
+* Code not required (−): it is not necessary to enter any code to download rules. This is the case of the rule source emergingthreats.
+* Code not configured (✗): it is necessary to enter a code to download the rules, and this has not been made yet. This is the case of the rule sources etpro and vrt in the example below.
+* Code configured (✓): the required code to download the rules has already been entered.
+
+[.text-center]
+.Default rule sources
+image::images/image3.png[image]
+
+For the example case, the etpro rule source will be disabled and the vrt rule source will be edited to enter the required code.
+
+[.text-center]
+.Default rule sources: disable etpro and edit vrt
+image::images/image30.png[image]
+
+
+
+
+
+
+
+
