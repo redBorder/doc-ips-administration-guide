@@ -1,0 +1,228 @@
+== Security policies
+
+redborder IPS sensor needs at least one security policy to be able to analyze traffic based on it. This section will explain how to create a signature policy and a reputation policy, how to assign them to a sensor and how to apply these changes so that policies are deployed to the sensor.
+To do this, you need to go back to the Sensors section on the redborder Manager website, as shown in the image below.
+
+[.text-center]
+.`Rule Versions` section in redborder Manager: go to `Sensors`
+image::images/image31.png[image]
+
+The `Options` drop-down list in this section shows different options related to security policies:
+
+[.text-center]
+.`Sensors`: Options related to security policies
+image::images/image19.png[image]
+
+=== Signature policy creation
+
+Access to `Global Signature Policies` to create a signature policy.
+
+[.text-center]
+.`Sensors`: go to `Global Signature Policies`
+image::images/image18.png[image]
+
+When you enter for the first time a message will appear stating that there is no policy.
+
+[.text-center]
+.`Global Signature Policies`: `New Policy`
+image::images/image43.png[image]
+
+To create a policy, click on the New Policy button and complete the fields as shown in the following image.
+
+[.text-center]
+.New Signature Policy
+image::images/image20.png[image]
+
+Description of each field or option:
+
+* Name: name of the signature policy.
+* Description: description of the signature policy.
+* Rule Sources & Rule Versions: selection of rule source and rule version which will be used to create the signature policy.
+* Options:
+** Show only uncommented rules:
+*** Checked: only rules not commented (or enabled) are used.
+*** Not checked: all rules are used, including commented (or disabled) rules.
+** Auto resolve dependencies:
+*** Checked: redborder Manager resolves flowbit dependencies.
+** Add new rules on update:
+*** Checked: after downloading and validating a new version of rules, the new rules of this version will be automatically included in the policy, taking the action indicated in the list that appears when enabling this option.
+** Block updates available:
+*** Checked: a message indicating a rule update is available will not be displayed.
+*** Not checked: after downloading and validating a new version of rules, a message will appear stating that there is a rule update available for the policy.
+
+Once the policy is created, all the rules included in it are displayed, as shown in the image below, which indicates that there are a total of 0 rules available for 10695 available.
+
+[.text-center]
+.Signature Policy: rules
+image::images/image14.png[image]
+
+The rules are grouped by categories, being able to deploy each category until arriving at the detail of a particular rule.
+
+[.text-center]
+.Signature Policy: rules in detail
+image::images/image10.png[image]
+
+Rules can be enabled individually or by category. For this example all rules have been enabled. To do this, all rules are selected and the `Alert` action is selected after clicking on `Change action(s)` button, as shown in the image below.
+
+[.text-center]
+.Signature policy: activating the entire set of rules
+image::images/image48.png[image]
+
+After a few seconds all the rules are activated, as shown in the image below.
+
+[.text-center]
+.Signature Policy: all rules activated
+image::images/image32.png[image]
+
+To return to the list of signature policies, simply click on `Signature Policies` for Domain root, as shown in the image above.
+The following image shows how the new signatures policy appears on the `Global Signature Policy` list.
+
+[.text-center]
+.`Global Signature Policies`: new policy on the list
+image::images/image51.png[image]
+
+Description of each column:
+
+* Policy Name: name of the policy. There can not be two policies with the same name.
+* Sources: rule sources used to create the policy .
+* Rules: number of active rules in the policy.
+* Owner: domain owner of the policy.
+* Status: if a more recent version of rules exists, it is indicated by the text "Update Available".
+* Created at: date and time of policy creation.
+
+=== Reputation policy creation
+
+To create a reputation policy you need to go back to the Sensors section.
+
+[.text-center]
+.`Global Signature Policies`: go to `Sensors`
+image::images/image5.png[image]
+
+From `Sensors` you can go to the `Global Reputation Policies` section from the options menu, as shown in the image below.
+
+[.text-center]
+.`Sensors`: go to `Global Reputation Policies`
+image::images/image13.png[image]
+
+From `Global Reputation Policies` select the `New Rep Policy` option.
+
+[.text-center]
+.`Global Reputation Policies`: `New Rep Policy`
+image::images/image44.png[image]
+
+A window appears where you must enter the name of the policy and, optionally, a description, as shown in the following image.
+
+[.text-center]
+.New Reputation Policy
+image::images/image21.png[image]
+
+After the policy has been created, the Manager automatically redirects to a window where the reputation rules that make up the policy can be configured.
+
+[.text-center]
+.Types of Rules for a Reputation Policy
+image::images/image7.png[image]
+
+Types of Rules for a Reputation Policy:
+
+* IP/Networks: IP addresses or network addresses involved in the communication.
+* Countries: countries involved in the communication.
+* Continents: continents involved in the communication.
+
+Regardless of the type of reputation rule to be chosen, the action to be applied in each case can be:
+
+* analyze: network traffic is analyzed as if there was no reputation policy.
+* bypass (white list): network traffic is not analyzed and is allowed to pass through.
+* drop (black list): network traffic is not analyzed and is blocked.
+
+A reputation rule example can be seen in the image below
+
+[.text-center]
+.Fields to complete on a reputation rule
+image::images/image38.png[image]
+
+The image below shows an example of reputation rules, which indicates the following in each of them:
+
+* Analyze all the traffic of the network address 10.0.50.0/24.
+* Analyze all the traffic of the IP address 10.0.70.5.
+* Allow and not analyze all traffic of the network address 10.0.0.0/8.
+* Block and not analyze all traffic related to Switzerland.
+
+[.text-center]
+.Example of reputation rules
+image::images/image50.png[image]
+
+It is important to take into account the order of the rules, since within each type, these are applied from top to bottom, with priority being given to the first ones introduced.
+
+Analyzing the IP/Networks section of this example, we see that the network of the third rule contains the network of the first rule and the IP of the second rule, in spite of this, the first two rules will have preference over the third. Therefore, traffic related to the network 10.0.50.0/24 and the IP 10.0.70.5 will be analyzed, but traffic of the rest of the IP addresses of the network 10.0.0.0/8 will not be analyzed.
+If the third rule were in the first position, then the rules concerning the network 10.0.50.0/24 and the IP 10.0.70.5 would have no effect.
+
+Finally, referring to the rule in the Countries section, network traffic from or to Switzerland will always be blocked, regardless of the previous rules.
+
+=== Assigning and enforcing security policies on redborder IPS
+
+Once the security policies have been created in redborder Manager, it is time to deploy them to the sensor.
+
+To do this, from the Sensors section, it is necessary to display the sensor options on which you want to apply each policy and select `Signature Policies` or `Reputation Policies`.
+
+[.text-center]
+.Types of policies available for redborder IPS sensor
+image::images/image23.png[image]
+
+For example, first a signature policy will be assigned. To do this, once inside the `Signature Policies`, click on the Assign button and then on OK, as shown in the image below.
+
+[.text-center]
+.Assignment of Signature Policy to the sensor
+image::images/image6.png[image]
+
+After this, the policy assigned to the sensor is highlighted in green.
+
+[.text-center]
+.Signature policy assigned to the sensor
+image::images/image12.png[image]
+
+When you repeat the same steps for the reputation policy, you get a window similar to the one in the previous image, in which the reputation policy assigned to the sensor is highlighted in green.
+
+[.text-center]
+.Reputation policy assigned to the sensor
+image::images/image9.png[image]
+
+At the end of the assignment, the `Policies` column in the `Sensors` section shows which policies have been assigned to the sensor.
+
+At the same time, the text `Configuration Changed` indicates that the configuration of this sensor has changed in regards to the security policies, so it is necessary to apply the new configuration in order to activate the changes.
+
+[.text-center]
+.Assigned policies, configuration change notice and application of the new configuration
+image::images/image29.png[image]
+
+Selecting the `Apply Configuration` option from the sensor options leads to the following image, which shows a list of sensors with assigned policies.
+
+[.text-center]
+.Configuration Update view
+image::images/image17.png[image]
+
+The `Configuration Update` view shows the policies to be applied to the different sensors. In this example, the boxes on the right are checked by default since the Manager has detected that there are pending changes to apply for the sensor `mysensor`.
+
+Description of the columns in the `Configuration Update` view:
+
+* Sensor / Group / Binding: Sensor, group and binding in which the policy in question has been assigned. Since reputation policies do not apply to bindings, this column does not appear in the Reputation Policies list.
+* Sig Policy o Rep Policy: signature or reputation policy to be applied.
+* Num. Rules: number of rules of the signature or reputation policy.
+* Last Time Applied: the last time a signature or reputation policy was applied to this sensor, group and binding combination.
+
+After selecting the `Update` option, the policy deployment task on the sensor, named `ApplyUpdateJob`, starts. Once the task finishes, the result can be seen in the `Tools` -> `Worker & Job Queue` section, as was done previously with the rule download task.
+
+[.text-center]
+.Console output of the `ApplyUpdateJob` task completed
+image::images/image39.png[image]
+
+
+
+
+
+
+
+
+
+
+
+

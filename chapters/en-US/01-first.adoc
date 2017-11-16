@@ -1,4 +1,4 @@
-== Chapter 1: First steps from redborder manager
+== First steps from redborder manager
 
 Once redborder IPS has been registered in redborder Manager, the sensor configuration must continue.
 Before redborder IPS will be able to analyze traffic based on a security policy, some tasks must be completed:
@@ -116,6 +116,84 @@ For the example case, the etpro rule source will be disabled and the vrt rule so
 [.text-center]
 .Default rule sources: disable etpro and edit vrt
 image::images/image30.png[image]
+
+The code for the vrt rule source can be obtained from the official Snort website. Once it is obtained, it will be entered in the `Oinkcode` box and the changes will be applied after clicking on Update.
+
+[.text-center]
+.vrt rule source edition: `Oinkcode`
+image::images/image42.png[image]
+
+Once configured, you can see in the image below how the value of the Code column becomes of the type "Code configured" (✓).
+
+[.text-center]
+.emergingthreats and vrt rule sources enabled and vrt code configured
+image::images/image41.png[image]
+
+After enabling and configuring rule sources correctly, it is possible to proceed to download rules by clicking on `Force Rule Update`.
+
+[.text-center]
+.Download of enabled rule sources
+image::images/image47.png[image]
+
+[NOTE]
+===============================
+In order to download IPS rules, redborder Manager must have an Internet connection and at least one properly configured primary DNS server, as explained in the redborder IPS Installation and Configuration Quick Guide.
+===============================
+
+Enabled rule sources will begin to be downloaded and processed in redborder Manager.
+
+[.text-center]
+.Downloading enabled rule sources
+image::images/image45.png[image]
+
+This action creates a background task. The status of this task can be checked in `Tools` -> `Worker & Job Queue`.
+
+[.text-center]
+.`Tools` -> `Worker & Job Queue`
+image::images/image26.png[image]
+
+You can see that the `RuleUpdatedbJob` task is in process.
+
+[.text-center]
+.`RuleUpdatedbJob` task is in process
+image::images/image25.png[image]
+
+When the task finishes, it will go to the `Stored jobs` section, from where you can get more information.
+
+[.text-center]
+.RuleUpdatedbJob task completed
+image::images/image8.png[image]
+
+This information shows the console output of the completed task.
+
+[.text-center]
+.Console output of the `RuleUpdatedbJob` task completed
+image::images/image55.png[image]
+
+[WARNING]
+===============================
+For vrt rule source, repeated attempts to download rule versions may result in a restriction by the provider. If this happens, the error message "429 Too Many Requests" will appear in the information message. We recommend you to wait 24 hours to retry the download.
+===============================
+
+Going back to the `Tools` -> `Rule Versions` section you can see the two versions of downloaded rules, as shown in the image below.
+
+[.text-center]
+.`Tools` -> `Rule Versions`: downloaded rule versions
+image::images/image28.png[image]
+
+Each rule version is identified by its date and time of download and has the following fields:
+
+* Checkbox: The platform administrator will enable this box to indicate that the rules version has been approved by him and it can be used in signature policies.
+* Rule version identifier with date and time in "YYYY-MM-DD HH: MM: SS" format.
+* Policies: it indicates the number of signatures policies that are using this rule version.
+* Number of Rules: it indicates the total number of rules that this version has, including commented (or disabled) rules.
+* New Rules: it indicates the total number of new rules with regard to the previous version.
+* Modified Rules: it indicates the total number of modified rules with regard to the previous version.
+* Del Rules: it indicates the total number of deleted rules with regard to the previous version.
+
+
+
+
 
 
 

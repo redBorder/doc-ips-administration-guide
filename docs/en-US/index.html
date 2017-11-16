@@ -713,19 +713,27 @@ b.conum * { color: inherit !important; }
 <div id="toc" class="toc2">
 <div id="toctitle">Index</div>
 <ul class="sectlevel1">
-<li><a href="#_chapter_1_first_steps_from_redborder_manager">Chapter 1: First steps from redborder manager</a>
+<li><a href="#_first_steps_from_redborder_manager">First steps from redborder manager</a>
 <ul class="sectlevel2">
 <li><a href="#_access_to_redborder_manager">Access to redborder Manager</a></li>
 <li><a href="#_basic_redborder_ips_sensor_configuration">Basic redborder IPS sensor configuration</a></li>
 <li><a href="#_download_ips_rules">Download IPS rules</a></li>
 </ul>
 </li>
+<li><a href="#_security_policies">Security policies</a>
+<ul class="sectlevel2">
+<li><a href="#_signature_policy_creation">Signature policy creation</a></li>
+<li><a href="#_reputation_policy_creation">Reputation policy creation</a></li>
+<li><a href="#_assigning_and_enforcing_security_policies_on_redborder_ips">Assigning and enforcing security policies on redborder IPS</a></li>
+</ul>
+</li>
+<li><a href="#_event_visualization">Event visualization</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_chapter_1_first_steps_from_redborder_manager">Chapter 1: First steps from redborder manager</h2>
+<h2 id="_first_steps_from_redborder_manager">First steps from redborder manager</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Once redborder IPS has been registered in redborder Manager, the sensor configuration must continue.
@@ -977,6 +985,636 @@ user <code>admin</code> and password <code>redborder</code>.</p>
 </div>
 <div class="title">Figure 10. Default rule sources: disable etpro and edit vrt</div>
 </div>
+<div class="paragraph">
+<p>The code for the vrt rule source can be obtained from the official Snort website. Once it is obtained, it will be entered in the <code>Oinkcode</code> box and the changes will be applied after clicking on Update.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image42.png" alt="image">
+</div>
+<div class="title">Figure 11. vrt rule source edition: <code>Oinkcode</code></div>
+</div>
+<div class="paragraph">
+<p>Once configured, you can see in the image below how the value of the Code column becomes of the type "Code configured" (✓).</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image41.png" alt="image">
+</div>
+<div class="title">Figure 12. emergingthreats and vrt rule sources enabled and vrt code configured</div>
+</div>
+<div class="paragraph">
+<p>After enabling and configuring rule sources correctly, it is possible to proceed to download rules by clicking on <code>Force Rule Update</code>.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image47.png" alt="image">
+</div>
+<div class="title">Figure 13. Download of enabled rule sources</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In order to download IPS rules, redborder Manager must have an Internet connection and at least one properly configured primary DNS server, as explained in the redborder IPS Installation and Configuration Quick Guide.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Enabled rule sources will begin to be downloaded and processed in redborder Manager.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image45.png" alt="image">
+</div>
+<div class="title">Figure 14. Downloading enabled rule sources</div>
+</div>
+<div class="paragraph">
+<p>This action creates a background task. The status of this task can be checked in <code>Tools</code> &#8594; <code>Worker &amp; Job Queue</code>.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image26.png" alt="image">
+</div>
+<div class="title">Figure 15. <code>Tools</code> &#8594; <code>Worker &amp; Job Queue</code></div>
+</div>
+<div class="paragraph">
+<p>You can see that the <code>RuleUpdatedbJob</code> task is in process.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image25.png" alt="image">
+</div>
+<div class="title">Figure 16. <code>RuleUpdatedbJob</code> task is in process</div>
+</div>
+<div class="paragraph">
+<p>When the task finishes, it will go to the <code>Stored jobs</code> section, from where you can get more information.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image8.png" alt="image">
+</div>
+<div class="title">Figure 17. RuleUpdatedbJob task completed</div>
+</div>
+<div class="paragraph">
+<p>This information shows the console output of the completed task.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image55.png" alt="image">
+</div>
+<div class="title">Figure 18. Console output of the <code>RuleUpdatedbJob</code> task completed</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For vrt rule source, repeated attempts to download rule versions may result in a restriction by the provider. If this happens, the error message "429 Too Many Requests" will appear in the information message. We recommend you to wait 24 hours to retry the download.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Going back to the <code>Tools</code> &#8594; <code>Rule Versions</code> section you can see the two versions of downloaded rules, as shown in the image below.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image28.png" alt="image">
+</div>
+<div class="title">Figure 19. <code>Tools</code> &#8594; <code>Rule Versions</code>: downloaded rule versions</div>
+</div>
+<div class="paragraph">
+<p>Each rule version is identified by its date and time of download and has the following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Checkbox: The platform administrator will enable this box to indicate that the rules version has been approved by him and it can be used in signature policies.</p>
+</li>
+<li>
+<p>Rule version identifier with date and time in "YYYY-MM-DD HH: MM: SS" format.</p>
+</li>
+<li>
+<p>Policies: it indicates the number of signatures policies that are using this rule version.</p>
+</li>
+<li>
+<p>Number of Rules: it indicates the total number of rules that this version has, including commented (or disabled) rules.</p>
+</li>
+<li>
+<p>New Rules: it indicates the total number of new rules with regard to the previous version.</p>
+</li>
+<li>
+<p>Modified Rules: it indicates the total number of modified rules with regard to the previous version.</p>
+</li>
+<li>
+<p>Del Rules: it indicates the total number of deleted rules with regard to the previous version.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_security_policies">Security policies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>redborder IPS sensor needs at least one security policy to be able to analyze traffic based on it. This section will explain how to create a signature policy and a reputation policy, how to assign them to a sensor and how to apply these changes so that policies are deployed to the sensor.
+To do this, you need to go back to the Sensors section on the redborder Manager website, as shown in the image below.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image31.png" alt="image">
+</div>
+<div class="title">Figure 20. <code>Rule Versions</code> section in redborder Manager: go to <code>Sensors</code></div>
+</div>
+<div class="paragraph">
+<p>The <code>Options</code> drop-down list in this section shows different options related to security policies:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image19.png" alt="image">
+</div>
+<div class="title">Figure 21. <code>Sensors</code>: Options related to security policies</div>
+</div>
+<div class="sect2">
+<h3 id="_signature_policy_creation">Signature policy creation</h3>
+<div class="paragraph">
+<p>Access to <code>Global Signature Policies</code> to create a signature policy.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image18.png" alt="image">
+</div>
+<div class="title">Figure 22. <code>Sensors</code>: go to <code>Global Signature Policies</code></div>
+</div>
+<div class="paragraph">
+<p>When you enter for the first time a message will appear stating that there is no policy.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image43.png" alt="image">
+</div>
+<div class="title">Figure 23. <code>Global Signature Policies</code>: <code>New Policy</code></div>
+</div>
+<div class="paragraph">
+<p>To create a policy, click on the New Policy button and complete the fields as shown in the following image.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image20.png" alt="image">
+</div>
+<div class="title">Figure 24. New Signature Policy</div>
+</div>
+<div class="paragraph">
+<p>Description of each field or option:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Name: name of the signature policy.</p>
+</li>
+<li>
+<p>Description: description of the signature policy.</p>
+</li>
+<li>
+<p>Rule Sources &amp; Rule Versions: selection of rule source and rule version which will be used to create the signature policy.</p>
+</li>
+<li>
+<p>Options:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Show only uncommented rules:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Checked: only rules not commented (or enabled) are used.</p>
+</li>
+<li>
+<p>Not checked: all rules are used, including commented (or disabled) rules.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Auto resolve dependencies:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Checked: redborder Manager resolves flowbit dependencies.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Add new rules on update:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Checked: after downloading and validating a new version of rules, the new rules of this version will be automatically included in the policy, taking the action indicated in the list that appears when enabling this option.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Block updates available:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Checked: a message indicating a rule update is available will not be displayed.</p>
+</li>
+<li>
+<p>Not checked: after downloading and validating a new version of rules, a message will appear stating that there is a rule update available for the policy.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once the policy is created, all the rules included in it are displayed, as shown in the image below, which indicates that there are a total of 0 rules available for 10695 available.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image14.png" alt="image">
+</div>
+<div class="title">Figure 25. Signature Policy: rules</div>
+</div>
+<div class="paragraph">
+<p>The rules are grouped by categories, being able to deploy each category until arriving at the detail of a particular rule.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image10.png" alt="image">
+</div>
+<div class="title">Figure 26. Signature Policy: rules in detail</div>
+</div>
+<div class="paragraph">
+<p>Rules can be enabled individually or by category. For this example all rules have been enabled. To do this, all rules are selected and the <code>Alert</code> action is selected after clicking on <code>Change action(s)</code> button, as shown in the image below.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image48.png" alt="image">
+</div>
+<div class="title">Figure 27. Signature policy: activating the entire set of rules</div>
+</div>
+<div class="paragraph">
+<p>After a few seconds all the rules are activated, as shown in the image below.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image32.png" alt="image">
+</div>
+<div class="title">Figure 28. Signature Policy: all rules activated</div>
+</div>
+<div class="paragraph">
+<p>To return to the list of signature policies, simply click on <code>Signature Policies</code> for Domain root, as shown in the image above.
+The following image shows how the new signatures policy appears on the <code>Global Signature Policy</code> list.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image51.png" alt="image">
+</div>
+<div class="title">Figure 29. <code>Global Signature Policies</code>: new policy on the list</div>
+</div>
+<div class="paragraph">
+<p>Description of each column:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Policy Name: name of the policy. There can not be two policies with the same name.</p>
+</li>
+<li>
+<p>Sources: rule sources used to create the policy .</p>
+</li>
+<li>
+<p>Rules: number of active rules in the policy.</p>
+</li>
+<li>
+<p>Owner: domain owner of the policy.</p>
+</li>
+<li>
+<p>Status: if a more recent version of rules exists, it is indicated by the text "Update Available".</p>
+</li>
+<li>
+<p>Created at: date and time of policy creation.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reputation_policy_creation">Reputation policy creation</h3>
+<div class="paragraph">
+<p>To create a reputation policy you need to go back to the Sensors section.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image5.png" alt="image">
+</div>
+<div class="title">Figure 30. <code>Global Signature Policies</code>: go to <code>Sensors</code></div>
+</div>
+<div class="paragraph">
+<p>From <code>Sensors</code> you can go to the <code>Global Reputation Policies</code> section from the options menu, as shown in the image below.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image13.png" alt="image">
+</div>
+<div class="title">Figure 31. <code>Sensors</code>: go to <code>Global Reputation Policies</code></div>
+</div>
+<div class="paragraph">
+<p>From <code>Global Reputation Policies</code> select the <code>New Rep Policy</code> option.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image44.png" alt="image">
+</div>
+<div class="title">Figure 32. <code>Global Reputation Policies</code>: <code>New Rep Policy</code></div>
+</div>
+<div class="paragraph">
+<p>A window appears where you must enter the name of the policy and, optionally, a description, as shown in the following image.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image21.png" alt="image">
+</div>
+<div class="title">Figure 33. New Reputation Policy</div>
+</div>
+<div class="paragraph">
+<p>After the policy has been created, the Manager automatically redirects to a window where the reputation rules that make up the policy can be configured.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image7.png" alt="image">
+</div>
+<div class="title">Figure 34. Types of Rules for a Reputation Policy</div>
+</div>
+<div class="paragraph">
+<p>Types of Rules for a Reputation Policy:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>IP/Networks: IP addresses or network addresses involved in the communication.</p>
+</li>
+<li>
+<p>Countries: countries involved in the communication.</p>
+</li>
+<li>
+<p>Continents: continents involved in the communication.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Regardless of the type of reputation rule to be chosen, the action to be applied in each case can be:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>analyze: network traffic is analyzed as if there was no reputation policy.</p>
+</li>
+<li>
+<p>bypass (white list): network traffic is not analyzed and is allowed to pass through.</p>
+</li>
+<li>
+<p>drop (black list): network traffic is not analyzed and is blocked.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A reputation rule example can be seen in the image below</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image38.png" alt="image">
+</div>
+<div class="title">Figure 35. Fields to complete on a reputation rule</div>
+</div>
+<div class="paragraph">
+<p>The image below shows an example of reputation rules, which indicates the following in each of them:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Analyze all the traffic of the network address 10.0.50.0/24.</p>
+</li>
+<li>
+<p>Analyze all the traffic of the IP address 10.0.70.5.</p>
+</li>
+<li>
+<p>Allow and not analyze all traffic of the network address 10.0.0.0/8.</p>
+</li>
+<li>
+<p>Block and not analyze all traffic related to Switzerland.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image50.png" alt="image">
+</div>
+<div class="title">Figure 36. Example of reputation rules</div>
+</div>
+<div class="paragraph">
+<p>It is important to take into account the order of the rules, since within each type, these are applied from top to bottom, with priority being given to the first ones introduced.</p>
+</div>
+<div class="paragraph">
+<p>Analyzing the IP/Networks section of this example, we see that the network of the third rule contains the network of the first rule and the IP of the second rule, in spite of this, the first two rules will have preference over the third. Therefore, traffic related to the network 10.0.50.0/24 and the IP 10.0.70.5 will be analyzed, but traffic of the rest of the IP addresses of the network 10.0.0.0/8 will not be analyzed.
+If the third rule were in the first position, then the rules concerning the network 10.0.50.0/24 and the IP 10.0.70.5 would have no effect.</p>
+</div>
+<div class="paragraph">
+<p>Finally, referring to the rule in the Countries section, network traffic from or to Switzerland will always be blocked, regardless of the previous rules.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_assigning_and_enforcing_security_policies_on_redborder_ips">Assigning and enforcing security policies on redborder IPS</h3>
+<div class="paragraph">
+<p>Once the security policies have been created in redborder Manager, it is time to deploy them to the sensor.</p>
+</div>
+<div class="paragraph">
+<p>To do this, from the Sensors section, it is necessary to display the sensor options on which you want to apply each policy and select <code>Signature Policies</code> or <code>Reputation Policies</code>.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image23.png" alt="image">
+</div>
+<div class="title">Figure 37. Types of policies available for redborder IPS sensor</div>
+</div>
+<div class="paragraph">
+<p>For example, first a signature policy will be assigned. To do this, once inside the <code>Signature Policies</code>, click on the Assign button and then on OK, as shown in the image below.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image6.png" alt="image">
+</div>
+<div class="title">Figure 38. Assignment of Signature Policy to the sensor</div>
+</div>
+<div class="paragraph">
+<p>After this, the policy assigned to the sensor is highlighted in green.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image12.png" alt="image">
+</div>
+<div class="title">Figure 39. Signature policy assigned to the sensor</div>
+</div>
+<div class="paragraph">
+<p>When you repeat the same steps for the reputation policy, you get a window similar to the one in the previous image, in which the reputation policy assigned to the sensor is highlighted in green.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image9.png" alt="image">
+</div>
+<div class="title">Figure 40. Reputation policy assigned to the sensor</div>
+</div>
+<div class="paragraph">
+<p>At the end of the assignment, the <code>Policies</code> column in the <code>Sensors</code> section shows which policies have been assigned to the sensor.</p>
+</div>
+<div class="paragraph">
+<p>At the same time, the text <code>Configuration Changed</code> indicates that the configuration of this sensor has changed in regards to the security policies, so it is necessary to apply the new configuration in order to activate the changes.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image29.png" alt="image">
+</div>
+<div class="title">Figure 41. Assigned policies, configuration change notice and application of the new configuration</div>
+</div>
+<div class="paragraph">
+<p>Selecting the <code>Apply Configuration</code> option from the sensor options leads to the following image, which shows a list of sensors with assigned policies.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image17.png" alt="image">
+</div>
+<div class="title">Figure 42. Configuration Update view</div>
+</div>
+<div class="paragraph">
+<p>The <code>Configuration Update</code> view shows the policies to be applied to the different sensors. In this example, the boxes on the right are checked by default since the Manager has detected that there are pending changes to apply for the sensor <code>mysensor</code>.</p>
+</div>
+<div class="paragraph">
+<p>Description of the columns in the <code>Configuration Update</code> view:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sensor / Group / Binding: Sensor, group and binding in which the policy in question has been assigned. Since reputation policies do not apply to bindings, this column does not appear in the Reputation Policies list.</p>
+</li>
+<li>
+<p>Sig Policy o Rep Policy: signature or reputation policy to be applied.</p>
+</li>
+<li>
+<p>Num. Rules: number of rules of the signature or reputation policy.</p>
+</li>
+<li>
+<p>Last Time Applied: the last time a signature or reputation policy was applied to this sensor, group and binding combination.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After selecting the <code>Update</code> option, the policy deployment task on the sensor, named <code>ApplyUpdateJob</code>, starts. Once the task finishes, the result can be seen in the <code>Tools</code> &#8594; <code>Worker &amp; Job Queue</code> section, as was done previously with the rule download task.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image39.png" alt="image">
+</div>
+<div class="title">Figure 43. Console output of the <code>ApplyUpdateJob</code> task completed</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_event_visualization">Event visualization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After the configuration, assignment and application of policies in the sensor is completed, the sensor starts analyzing the network traffic and sending the generated events to redborder Manager.</p>
+</div>
+<div class="paragraph">
+<p>To visualize the sensor events you have to go to the analytical part of the platform, located on the left of the top panel of the web of redborder Manager. The IPS App is in this zone, from which it is possible to consult the information that the sensor is generating.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image35.png" alt="image">
+</div>
+<div class="title">Figure 44. Go to the IPS App</div>
+</div>
+<div class="paragraph">
+<p>Once inside, the view is structured as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Row formed by different options and located at the beginning of the view: From these options you can set filters, switch between types of views, select aggregation and granularity, change the type of graph, include new fields to view, etc.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image11.png" alt="image">
+</div>
+<div class="title">Figure 45. IPS App analytics configuration options</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Row formed by different temporal ranges: By default, last hour data is displayed, but with just a mouse click you can quickly view data for the last 24 hours, last week or even last month. Of course, there is the possibility of selecting custom ranges.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image49.png" alt="image">
+</div>
+<div class="title">Figure 46. Preset temporary ranges of the IPS App</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Graphical representation of IPS events: There are different types of graphical representations: Streams, Area, Line, Bars, Stacked Area, etc.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image52.png" alt="image">
+</div>
+<div class="title">Figure 47. Streams type representation of IPS events</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Table of IPS events: Below the graphical representation, the detail of the events appears.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image54.png" alt="image">
+</div>
+<div class="title">Figure 48. Table of IPS events</div>
+</div>
+<div class="paragraph">
+<p>From the Raw view it is possible to obtain the complete detail of each event by clicking on the button to the right of each row.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/image33.png" alt="image">
+</div>
+<div class="title">Figure 49. Detail of an IPS event</div>
 </div>
 </div>
 </div>

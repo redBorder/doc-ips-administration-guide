@@ -18,4 +18,6 @@
 = redborder IPS administration guide
 
 include::chapters/{i18n}/01-first.adoc[]
+include::chapters/{i18n}/02-policies.adoc[]
+include::chapters/{i18n}/03-events.adoc[]
 

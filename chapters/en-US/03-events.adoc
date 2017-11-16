@@ -1,0 +1,43 @@
+== Event visualization
+
+After the configuration, assignment and application of policies in the sensor is completed, the sensor starts analyzing the network traffic and sending the generated events to redborder Manager.
+
+To visualize the sensor events you have to go to the analytical part of the platform, located on the left of the top panel of the web of redborder Manager. The IPS App is in this zone, from which it is possible to consult the information that the sensor is generating.
+
+[.text-center]
+.Go to the IPS App
+image::images/image35.png[image]
+
+Once inside, the view is structured as follows:
+
+* Row formed by different options and located at the beginning of the view: From these options you can set filters, switch between types of views, select aggregation and granularity, change the type of graph, include new fields to view, etc.
+
+[.text-center]
+.IPS App analytics configuration options
+image::images/image11.png[image]
+
+* Row formed by different temporal ranges: By default, last hour data is displayed, but with just a mouse click you can quickly view data for the last 24 hours, last week or even last month. Of course, there is the possibility of selecting custom ranges.
+
+[.text-center]
+.Preset temporary ranges of the IPS App
+image::images/image49.png[image]
+
+* Graphical representation of IPS events: There are different types of graphical representations: Streams, Area, Line, Bars, Stacked Area, etc.
+
+[.text-center]
+.Streams type representation of IPS events
+image::images/image52.png[image]
+
+* Table of IPS events: Below the graphical representation, the detail of the events appears.
+
+[.text-center]
+.Table of IPS events
+image::images/image54.png[image]
+
+From the Raw view it is possible to obtain the complete detail of each event by clicking on the button to the right of each row.
+
+[.text-center]
+.Detail of an IPS event
+image::images/image33.png[image]
+
+
